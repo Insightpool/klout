@@ -6,7 +6,12 @@ module Klout
   class Identity
     class << self
       def find_by_twitter_id(twitter_id)
-        response = Klout.get "/identity.json/tw/#{twitter_id}", :query => {key: Klout.api_key}
+        response = Klout.get "/tw-user.json/#{twitter_id}/score", :query => {key: Klout.api_key}
+        Hashie::Mash.new(response)
+      end
+      
+      def find_scores_by_twitter_ids(twitter_ids)
+        response = Klout.get "/tw-user.json/batch/score?twitterIds=#{twitter_ids}", :query => {key: Klout.api_key}
         Hashie::Mash.new(response)
       end
       
