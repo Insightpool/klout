@@ -15,6 +15,13 @@ module Klout
         Hashie::Mash.new(response)
       end
       
+      # Batch identity method only; that's all we use
+      # Probably not the best place to put it
+      def find_topics_by_twitter_ids(twitter_ids)
+        response = Klout.get "/tw-user.json/batch/topics?twitterIds=#{twitter_ids}", :query => {key: Klout.api_key}
+        Hashie::Mash.new(response)
+      end
+      
       def find_by_screen_name(screen_name)
         response = Klout.get "/identity.json/twitter", :query => {key: Klout.api_key, screenName: screen_name}
         Hashie::Mash.new(response)
